@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB to Binary Color Generator</title>
+  <style>
+    #colorBox {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RGB to Binary Color Generator</h1>
+
+  <label for="red">Red:</label>
+  <input type="number" id="red" min="0" max="255" value="0">
+
+  <label for="green">Green:</label>
+  <input type="number" id="green" min="0" max="255" value="0">
+
+  <label for="blue">Blue:</label>
+  <input type="number" id="blue" min="0" max="255" value="0">
+
+  <button onclick="convertRGB()">Convert to Binary</button>
+
+  <div id="colorBox"></div>
+
+  <script>
+    function convertRGB() {
+      // Get RGB values
+      var red = document.getElementById("red").value;
+      var green = document.getElementById("green").value;
+      var blue = document.getElementById("blue").value;
+
+      // Convert RGB to binary
+      var redBinary = decToBinary(red);
+      var greenBinary = decToBinary(green);
+      var blueBinary = decToBinary(blue);
+
+      // Display binary values
+      alert("Red: " + redBinary + "\nGreen: " + greenBinary + "\nBlue: " + blueBinary);
+
+      // Display color in color box
+      var colorBox = document.getElementById("colorBox");
+      colorBox.style.backgroundColor = "rgb(" + red + "," + green + "," + blue + ")";
+    }
+
+    function decToBinary(decimal) {
+      return (decimal >>> 0).toString(2);
+    }
+  </script>
+
+</body>
+</html>
