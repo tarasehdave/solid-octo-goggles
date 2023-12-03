@@ -1,6 +1,6 @@
 ---
 toc: true
-title: Binary Lightbulb demonstration
+title: Binary Lightbulb Demonstration
 layout: default
 description: A Binary Math application of lightbulbs that will be used for my binary conversion game
 courses: { compsci: {week: 2} }
