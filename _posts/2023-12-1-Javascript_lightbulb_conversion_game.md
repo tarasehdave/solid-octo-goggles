@@ -3,7 +3,7 @@ toc: true
 title: Binary Lightbulb Conversion Game Improved
 layout: default
 description: A Binary Math application of lightbulbs that prompts the user to convert decimal and hexadecimal to binary
-courses: { compsci: {week: 4} }
+courses: { compsci: {week: 2} }
 type: hacks
 ---
 

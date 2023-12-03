@@ -3,7 +3,7 @@ toc: true
 title: Binary Lightbulb demonstration
 layout: default
 description: A Binary Math application of lightbulbs that will be used for my binary conversion game
-courses: { compsci: {week: 4} }
+courses: { compsci: {week: 2} }
 type: hacks
 ---
 
