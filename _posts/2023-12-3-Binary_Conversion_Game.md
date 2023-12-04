@@ -6,7 +6,7 @@ description: A Binary Math application that will be used for the binary conversi
 courses: { compsci: {week: 2} }
 type: hacks
 ---
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,7 +41,7 @@ type: hacks
             // Check if the guess is correct
             userDecimalGuess = parseInt(userDecimalGuess);
             if (userDecimalGuess === correctDecimal) {
-                alert('Congratulations! You guessed the correct decimal value.');
+                alert('Well done! The decimal value you entered was correct!');
             } else {
                 alert(`Sorry, the correct decimal value was ${correctDecimal}. Try again!`);
             }
