@@ -6,7 +6,6 @@ description: A Binary Math application that will be used for the binary conversi
 courses: { compsci: {week: 2} }
 type: hacks
 ---
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,52 +22,38 @@ type: hacks
 <body>
 
 <script>
-function getRandomWord() {
-    const words = ["peyton", "tara", "ameer", "developer", "coding", "binary"];
-    const randomIndex = Math.floor(Math.random() * words.length);
-    return words[randomIndex];
-  }
-  
-  function wordToBinary(word) {
-    return Array.from(word).map(char => char.charCodeAt(0).toString(2)).join(' ');
-  }
-  
-  function playBinaryWordGuessingGame() {
-    const secretWord = getRandomWord();
-    const binaryRepresentation = wordToBinary(secretWord);
-    const wordLength = secretWord.length;
-    let attempts = 0;
-  
-    alert("Welcome to the Binary Word Guessing Game!");
-    alert(`Try to guess the binary representation of the word: ${secretWord}`);
-  
-    function makeGuess() {
-      const playerGuess = prompt("Enter your binary word guess:");
-  
-      if (playerGuess !== binaryRepresentation) {
-        alert(`Incorrect guess. For tester purposes the correct binary representation is: ${binaryRepresentation}`);
-        attempts++;
-        makeGuess();
-      } else {
-        alert(`Congratulations! You guessed the correct binary representation "${binaryRepresentation}" of the word "${secretWord}" in ${attempts} attempts.`);
-        askToPlayAgain();
-      }
+    // Generate a random decimal number between 0 and 255
+
+    // Function to convert decimal to binary with leading zeroes
+    function decimalToBinary(decimal) {
+        // Use toString(2) to convert to binary and padStart to add leading zeroes
+        return decimal.toString(2).padStart(8, '0');
     }
-  
-    function askToPlayAgain() {
-      const playAgain = confirm("Do You Want to Play Again?");
-      if (playAgain) {
-        playBinaryWordGuessingGame();
-      } else {
-        alert("Thanks for Playing! Goodbye.");
-      }
+
+    // Convert the decimal number to binary
+
+    // Function to check the user's input
+    function checkGuess() {
+        // Get the user's input
+        const correctDecimal = Math.floor(Math.random() * 256);
+        const correctBinary = decimalToBinary(correctDecimal);
+        const userDecimalGuess = parseInt(prompt(`Convert ${correctBinary} to decimal and enter the decimal value:`));
+
+        // Check if the guess is correct
+        if (userDecimalGuess === correctDecimal) {
+            alert('Congratulations! You guessed the correct decimal value.');
+        } else {
+            alert(`Sorry, the correct decimal value was ${correctDecimal}. Try again!`);
+        }m
+
     }
-  
-    makeGuess();
-  } 
-playBinaryWordGuessingGame();
 </script>
 
+<h1>Welcom to the Binary Number Guessing Game</h1>
+<p>Convert the following binary number to decimal and enter the decimal value:</p>
+
+<!-- Button to trigger the guessing function -->
+<button onclick="checkGuess()">Guess Now</button>
 
 </body>
 </html>
