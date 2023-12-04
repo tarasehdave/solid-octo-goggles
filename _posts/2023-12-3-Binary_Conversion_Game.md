@@ -54,10 +54,10 @@ type: hacks
 </head>
 <body>
     <header>
-        <h1>Welcome to the Binary Number Guessing Game</h1>
+        <h1>Welcome to the Binary Number Guessing Game!</h1>
     </header>
     <main>
-        <p>Convert the following binary number to decimal and enter the decimal value:</p>
+        <p>Convert the binary number to decimal:</p>
         <button onclick="checkGuess()">Test Your Knowledge</button>
     </main>
 </body>
