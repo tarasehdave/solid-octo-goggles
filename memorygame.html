@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Card Game</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('./images/game.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(4, 120px);
+      grid-gap: 10px;
+    }
+
+    .card {
+      width: 120px;
+      height: 120px;
+      background-color: rgba(37, 111, 195, 0.808);
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+      background-image: url('./images/card.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .card img {
+      display: block; /* Show the image when flipped */
+      
+
+    }
+
+    .card .card-content {
+      display: none; /* Hide the text content when flipped */
+    }
+
+    .card.flipped {
+      transform: rotateY(360deg);
+      background-image: none;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .card.matched {
+      background-color: #2ecc71;
+      cursor: default;
+      transform: none;
+    }
+
+    .flipped .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+    }
+
+    .flipped img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 5px;
+      display: none; /* Initially hide the image */
+    }
+
+    .title
+    {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 60px;
+        color: rgb(25, 75, 211);
+    }
+  </style>
+</head>
+<body>
+
+<div>
+    <h1 style="text-align: center;" class="title">Memory Game</h1>
+    <div id="game-board"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const cardValues = ['A', 'B', 'C', 'D', 'E','F']; // Array of card values (5 pairs)
+    const totalPairs = cardValues.length;
+
+    // Duplicate the card values to create pairs
+    const allCards = cardValues.concat(cardValues);
+    const flippedCards = []
+
+    // Shuffle the cards using Fisher-Yates algorithm
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(allCards);
+
+    const gameBoard = document.getElementById('game-board');
+    let flippedCard = null;
+    let matchedPairs = 0;
+
+    // Create card elements and add click event listeners
+    allCards.forEach((value, index) => {
+      const asciiValue = value.charCodeAt(0); // Get ASCII value
+      const binaryValue = asciiValue.toString(2); // Convert ASCII to binary
+
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.dataset.ascii = asciiValue;
+      card.dataset.binary = binaryValue;
+      card.dataset.index = index;
+
+      const cardContent = document.createElement('div');
+      cardContent.classList.add('card-content');
+
+      const cardText = document.createElement('div');
+      cardText.textContent = `ASCII: ${asciiValue}\nBinary: ${binaryValue}`;
+
+      const cardImage = document.createElement('img');
+      //cardImage.src = url('./game.png'); // Replace with the path to your image
+      cardImage.alt = 'Card Image';
+
+      cardContent.appendChild(cardText);
+      cardContent.appendChild(cardImage);
+      card.appendChild(cardContent);
+
+      card.addEventListener('click', flipCard);
+      gameBoard.appendChild(card);
+    });
+
+    // Handle card flipping logic
+    function flipCard() {
+      flippedCards.push(this);
+      if (!flippedCard || (flippedCard !== this && !this.classList.contains('matched'))) {
+        this.classList.toggle('flipped');
+
+        if (flippedCard) {
+          // If another card is flipped, check for a match
+          checkForMatch(this);
+ v          }else{
+			flippedCard = this;
+		}
+      }
+    }
+
+    // Check if the flipped cards match
+    function checkForMatch(card) {
+      if (
+        flippedCard.dataset.binary === card.dataset.binary &&
+        flippedCard.dataset.index !== card.dataset.index
+      ) {
+        flippedCard.classList.add('matched');
+        card.classList.add('matched');
+        matchedPairs++;
+	    flippedCard = null;
+		flippedCards.splice(0, flippedCards.length);
+        if (matchedPairs === totalPairs) {
+          alert('Congratulations! You matched all pairs.');
+        }
+      } else {
+        // If cards don't match, flip them back after a delay
+        setTimeout(()=>{
+          flippedCards.forEach((item) =>{
+            item.classList.toggle('flipped');
+          })
+          flippedCards.splice(0, flippedCards.length);
+          flippedCard = null;
+        }        
+        , 1000); // Delay set to 2 seconds (2000 milliseconds)
+      }
+
+      flippedCard = null;
+    }
+  });
+</script>
+
+</body>
+</html>
