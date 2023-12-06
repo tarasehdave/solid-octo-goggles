@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB to Binary Converter</title>
+    <style>
+        #colorBox {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<button onclick="convertRGBtoBinary()">Convert RGB to Binary</button>
+<div id="colorBox"></div>
+
+<script>
+    function convertRGBtoBinary() {
+        // Get RGB values (for demonstration, you can replace these with your own values)
+        const red = 255;
+        const green = 120;
+        const blue = 80;
+
+        // Convert RGB to binary
+        const binaryRed = red.toString(2).padStart(8, '0');
+        const binaryGreen = green.toString(2).padStart(8, '0');
+        const binaryBlue = blue.toString(2).padStart(8, '0');
+
+        // Concatenate binary values
+        const binaryRepresentation = binaryRed + binaryGreen + binaryBlue;
+
+        // Display binary representation in the color box
+        displayBinaryInBox(binaryRepresentation);
+    }
+
+    function displayBinaryInBox(binaryRepresentation) {
+        const colorBox = document.getElementById('colorBox');
+        colorBox.style.backgroundColor = `#${binaryRepresentation}`;
+    }
+</script>
+
+</body>
+</html>
