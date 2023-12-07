@@ -10,14 +10,14 @@ type: hacks
 <html lang="en">
 <style>
     header {
-        background-color: #f0f0f0;
+        background-color: #1d1c63;
         padding: 10px;
         border-radius: 10px;
     }
 </style>
 <style>
     body {
-        background-color: #f9f9f9;
+        background-color: #1d1c63;
         margin: 30px;
     }
 </style>
