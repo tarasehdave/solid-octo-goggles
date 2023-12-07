@@ -8,6 +8,19 @@ type: hacks
 ---
 
 <html lang="en">
+<style>
+    header {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 10px;
+    }
+</style>
+<style>
+    body {
+        background-color: #f9f9f9;
+        margin: 30px;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
