@@ -1,69 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RGB to Binary Converter</title>
-    <style>
-        body {
-            background: ('./images/game.png') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            flex-direction: column;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space RGB to Binary Converter</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('space.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
 
-        #colorBox {
-            width: 100px;
-            height: 100px;
-            border: 1px solid #d62d2d;
-            margin-top: 20px;
-        }
-
-        button {
-            font-size: 16px;
-            padding: 10px;
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+    #result-box {
+      width: 300px;
+      height: 150px;
+      border: 2px solid #fff;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-family: monospace;
+    }
+  </style>
 </head>
 <body>
+  <div id="result-box"></div>
 
-<button onclick="convertRGBtoBinary()">Convert RGB to Binary</button>
-<div id="colorBox"></div>
-
-<script>
-    function convertRGBtoBinary() {
-        // Set RGB values to create blue color
-        const red = 0;
-        const green = 0;
-        const blue = 255;
-
-        // Convert RGB to binary
-        const binaryRed = red.toString(2).padStart(8, '0');
-        const binaryGreen = green.toString(2).padStart(8, '0');
-        const binaryBlue = blue.toString(2).padStart(8, '0');
-
-        // Concatenate binary values
-        const binaryRepresentation = binaryRed + binaryGreen + binaryBlue;
-
-        // Display binary representation in the color box
-        displayBinaryInBox(binaryRepresentation);
+  <script>
+    function getRandomRGB() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return { r, g, b };
     }
 
-    function displayBinaryInBox(binaryRepresentation) {
-        const colorBox = document.getElementById('colorBox');
-        colorBox.style.backgroundColor = `#${binaryRepresentation}`;
+    function rgbToBinary(rgb) {
+      const binaryR = rgb.r.toString(2).padStart(8, '0');
+      const binaryG = rgb.g.toString(2).padStart(8, '0');
+      const binaryB = rgb.b.toString(2).padStart(8, '0');
+      return `${binaryR} ${binaryG} ${binaryB}`;
     }
-</script>
 
+    function updateResultBox() {
+      const rgb = getRandomRGB();
+      const binary = rgbToBinary(rgb);
+      const resultBox = document.getElementById('result-box');
+      resultBox.textContent = `RGB: (${rgb.r}, ${rgb.g}, ${rgb.b})\nBinary: ${binary}`;
+    }
+
+    // Update the result box initially and on button click
+    updateResultBox();
+    document.addEventListener('click', updateResultBox);
+  </script>
 </body>
 </html>
-
