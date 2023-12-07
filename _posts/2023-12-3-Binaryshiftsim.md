@@ -9,7 +9,7 @@ type: hacks
 
 # Binary Shift Simulator
 
-This simulator helps in understanding binary shift operations (left and right) with an interactive interface.
+This simulator helps in understanding binary shift operations (left and right) with an interactive interface and provides feedback to enhance learning.
 
 ## HTML
 
@@ -21,31 +21,33 @@ This simulator helps in understanding binary shift operations (left and right) w
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binary Shift Simulator</title>
     <style>
-        /* CSS styles are included here */
+        /* CSS styles */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
         }
-
         #app {
             margin: 0 auto;
             width: 80%;
             padding: 20px;
         }
-
         input, button {
             margin: 10px;
             padding: 10px;
             font-size: 16px;
         }
-
-        #binaryOutput, #decimalOutput, #shiftExplanation {
+        #binaryOutput, #decimalOutput, #shiftExplanation, #feedback {
             margin-top: 20px;
             font-size: 18px;
             color: #333;
         }
-
-        /* Additional responsive design styles can be added here */
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        /* Responsive design styles */
     </style>
 </head>
 <body>
@@ -60,21 +62,35 @@ This simulator helps in understanding binary shift operations (left and right) w
         <div id="binaryOutput"></div>
         <div id="decimalOutput"></div>
         <div id="shiftExplanation"></div>
-        <!-- Additional interactive elements can be added here -->
+        <div id="feedback"></div> <!-- Feedback display area -->
     </div>
     <script>
-        // JavaScript functions are included here
+        // JavaScript functions
+
+        function isValidBinary(binary) {
+            return /^[01]+$/.test(binary);
+        }
 
         function shiftLeft() {
             let binary = document.getElementById('binaryInput').value;
-            let shifted = binary.substring(1) + '0';
-            updateOutput(shifted);
+            if (isValidBinary(binary)) {
+                let shifted = binary.substring(1) + '0';
+                updateOutput(shifted);
+                provideFeedback("Left shift operation performed successfully.");
+            } else {
+                provideFeedback("Invalid binary input. Please enter a binary number.", true);
+            }
         }
 
         function shiftRight() {
             let binary = document.getElementById('binaryInput').value;
-            let shifted = '0' + binary.substring(0, binary.length - 1);
-            updateOutput(shifted);
+            if (isValidBinary(binary)) {
+                let shifted = '0' + binary.substring(0, binary.length - 1);
+                updateOutput(shifted);
+                provideFeedback("Right shift operation performed successfully.");
+            } else {
+                provideFeedback("Invalid binary input. Please enter a binary number.", true);
+            }
         }
 
         function generateRandomBinary() {
@@ -84,6 +100,7 @@ This simulator helps in understanding binary shift operations (left and right) w
             }
             document.getElementById('binaryInput').value = randomBinary;
             updateOutput(randomBinary);
+            provideFeedback("Random binary number generated.");
         }
 
         function updateOutput(shiftedBinary) {
@@ -92,7 +109,13 @@ This simulator helps in understanding binary shift operations (left and right) w
             // Add explanation and overflow/underflow checks
         }
 
-        // Additional functions for interactive learning aids and challenge mode can be implemented here
+        function provideFeedback(message, isError = false) {
+            let feedbackElement = document.getElementById('feedback');
+            feedbackElement.className = isError ? 'error' : 'success';
+            feedbackElement.innerText = message;
+        }
+
+        // Additional functions for interactive learning aids and challenge mode
     </script>
 </body>
 </html>

@@ -19,17 +19,17 @@ type: hacks
             margin: 50px;
         }
     </style>
-    <!-- Move the script tag to the head section -->
+    <!-- Move the script tag to the header -->
     <script>
-        // Function to generate a random decimal number between 0 and 255
+        // Generate a random decimal number between 0 and 255
         function generateRandomDecimal() {
             return Math.floor(Math.random() * 256);
         }
-        // Function to convert decimal to binary with leading zeroes
+        // Convert decimal to binary with leading zeroes
         function decimalToBinary(decimal) {
             return decimal.toString(2).padStart(8, '0');
         }
-        // Function to check the user's input
+        // Check the user's input
         function checkGuess() {
             const correctDecimal = generateRandomDecimal();
             const correctBinary = decimalToBinary(correctDecimal);
@@ -46,7 +46,7 @@ type: hacks
                 alert(`Sorry, the correct decimal value was ${correctDecimal}. Try again!`);
             }
         }
-        // Function to validate if the input is a valid decimal
+        // Validate if the input is a valid decimal
         function isValidDecimal(value) {
             return !isNaN(value) && value !== '';
         }
