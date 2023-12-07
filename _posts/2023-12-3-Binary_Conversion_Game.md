@@ -72,11 +72,11 @@ type: hacks
 </body>
     <main>
         <p>Binary Place Values:
-        1 (2^0): Represents 2^0 = 1
-        10 (2^1): Represents 2^1 = 2
-        100 (2^2): Represents 2^2 = 4
-        1000 (2^3): Represents 2^3 = 8
-        10000 (2^4): Represents 2^4 = 16
+        <p>1 (2^0): Represents 2^0 = 1
+        <p>10 (2^1): Represents 2^1 = 2
+        <p>>100 (2^2): Represents 2^2 = 4
+        <p>1000 (2^3): Represents 2^3 = 8
+        <p>10000 (2^4): Represents 2^4 = 16
 <body>
     <main>
         <p>Convert the binary number to decimal:</p>
