@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Space RGB to Binary Converter</title>
+  <title>Spaceship Color Changer</title>
   <style>
     body {
       display: flex;
@@ -12,54 +13,42 @@
       height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
-      background-image: url('./images/game.png');
+      background-image: url('./images/colorplanet.webp');
       background-repeat: no-repeat;
       background-size: cover;
     }
 
-    #result-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    #spaceship {
       width: 300px;
-      height: 250px;
-      border: 2px solid #fff;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      font-family: monospace;
-    }
-
-    #color-box {
-      margin-top: 20px;
-      width: 100%;
-      height: 100px;
+      height: 300px;
+      margin-bottom: 30px;
       border: 1px solid #fff;
     }
 
+    #rgb-value, #ascii-8bit, #ascii-24bit {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
     button {
-      margin-top: 10px;
-      background-color: #4CAF50;
+      background-color: #4c82af;
       color: white;
       border: none;
       padding: 10px 20px;
       text-align: center;
       text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
+      font-size: 25px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div id="result-box">
-    <div id="color-box"></div>
-    <p id="rgb-text"></p>
-    <p id="binary-text"></p>
-    <button onclick="generateRGB()">Generate RGB</button>
-    <button onclick="convertToBinary()">Convert to Binary</button>
-  </div>
+  <div id="spaceship"></div>
+  <div id="rgb-value"></div>
+  <div id="ascii-8bit"></div>
+  <div id="ascii-24bit"></div>
+  <button onclick="updateSpaceshipColor()">Generate New Color</button>
 
   <script>
     function getRandomRGB() {
@@ -69,40 +58,28 @@
       return { r, g, b };
     }
 
-    function rgbToBinary(rgb) {
-      const binaryR = rgb.r.toString(2).padStart(8, '0');
-      const binaryG = rgb.g.toString(2).padStart(8, '0');
-      const binaryB = rgb.b.toString(2).padStart(8, '0');
-      return `${binaryR} ${binaryG} ${binaryB}`;
+    function rgbToAscii(rgb) {
+      const asciiR = rgb.r.toString(2).padStart(8, '0');
+      const asciiG = rgb.g.toString(2).padStart(8, '0');
+      const asciiB = rgb.b.toString(2).padStart(8, '0');
+      const ascii24Bit = (rgb.r << 16 | rgb.g << 8 | rgb.b).toString(2).padStart(24, '0');
+      return { ascii8Bit: `${asciiR} ${asciiG} ${asciiB}`, ascii24Bit };
     }
 
-    let currentRGB;
+    function updateSpaceshipColor() {
+      const rgb = getRandomRGB();
+      const spaceship = document.getElementById('spaceship');
+      const rgbValue = document.getElementById('rgb-value');
+      const ascii8bit = document.getElementById('ascii-8bit');
+      const ascii24bit = document.getElementById('ascii-24bit');
 
-    function generateRGB() {
-      currentRGB = getRandomRGB();
-      updateResultBox();
+      spaceship.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+      rgbValue.textContent = `RGB: (${rgb.r}, ${rgb.g}, ${rgb.b})`;
+
+      const asciiCodes = rgbToAscii(rgb);
+      ascii8bit.textContent = `8-bit ASCII: ${asciiCodes.ascii8Bit}`;
+      ascii24bit.textContent = `24-bit ASCII: ${asciiCodes.ascii24Bit}`;
     }
-
-    function convertToBinary() {
-      const binary = rgbToBinary(currentRGB);
-      document.getElementById('binary-text').textContent = `Binary: ${binary}`;
-    }
-
-    function updateResultBox() {
-      const resultBox = document.getElementById('result-box');
-      const colorBox = document.getElementById('color-box');
-      const rgbText = document.getElementById('rgb-text');
-      const binaryText = document.getElementById('binary-text');
-
-      resultBox.textContent = ''; // Clear existing text content
-      colorBox.style.backgroundColor = `rgb(${currentRGB.r}, ${currentRGB.g}, ${currentRGB.b})`;
-      rgbText.textContent = `RGB: (${currentRGB.r}, ${currentRGB.g}, ${currentRGB.b})`;
-      binaryText.textContent = ''; // Clear binary text
-    }
-
-    // Initial setup
-    generateRGB();
   </script>
 </body>
 </html>
-
