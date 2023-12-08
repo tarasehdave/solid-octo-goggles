@@ -80,6 +80,7 @@ type: hacks
         <p> etc.
 {% assign BITS = 8 %}
 
+<main> Here is a visual representation! <main>
 <style>
     td {
         text-align: center;
