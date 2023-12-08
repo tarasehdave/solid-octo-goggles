@@ -79,7 +79,6 @@ type: hacks
         <p>00010000 (2^4): Represents 2^4 = 16
         <p> etc.
 {% assign BITS = 8 %}
-
 <header> Here is a visual representation! <header>
 <style>
     td {
@@ -234,3 +233,20 @@ Liquid for loop includes last number, thus the Minus
         <button onclick="checkGuess()">Test Your Knowledge</button>
     </main>
 </body>
+<style>
+    .card {
+      width: 120px;
+      height: 120px;
+      background-color: rgba(37, 111, 195, 0.808);
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+      background-image: url('./images/card.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
