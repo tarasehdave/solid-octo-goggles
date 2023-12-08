@@ -72,15 +72,15 @@ type: hacks
 </body>
     <main>
         <p>Binary Place Values:
-        <p>1 (2^0): Represents 2^0 = 1
-        <p>10 (2^1): Represents 2^1 = 2
-        <p>>100 (2^2): Represents 2^2 = 4
-        <p>1000 (2^3): Represents 2^3 = 8
-        <p>10000 (2^4): Represents 2^4 = 16
+        <p>00000001 (2^0): Represents 2^0 = 1
+        <p>00000010 (2^1): Represents 2^1 = 2
+        <p>00000100 (2^2): Represents 2^2 = 4
+        <p>00001000 (2^3): Represents 2^3 = 8
+        <p>00010000 (2^4): Represents 2^4 = 16
+        <p> etc.
 <body>
     <main>
         <p>Convert the binary number to decimal:</p>
         <button onclick="checkGuess()">Test Your Knowledge</button>
     </main>
 </body>
-</html>
