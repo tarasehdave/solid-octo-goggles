@@ -13,7 +13,7 @@ type: hacks
             font-family: Times, serif;
             text-align: center;
             margin: 50px;
-            background-image: url('/Users/peytonleigh/solid-octo-goggles/images/space.jpeg');
+            background-image: url('./images/space.jpeg');
             background-size: cover;
             background-position: center;
         }
