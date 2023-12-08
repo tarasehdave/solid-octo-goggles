@@ -8,6 +8,21 @@ type: hacks
 ---
 
 <html lang="en">
+ <style>
+        body {
+            font-family: Times, serif;
+            text-align: center;
+            margin: 50px;
+            background-image: url('/Users/peytonleigh/solid-octo-goggles/images/space.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+        header {
+            background-color: #1d1c63;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
 <style>
     header {
         background-color: #1d1c63;
@@ -234,19 +249,3 @@ Liquid for loop includes last number, thus the Minus
     </main>
 </body>
 <style>
-    .card {
-      width: 120px;
-      height: 120px;
-      background-color: rgba(37, 111, 195, 0.808);
-      color: #fff;
-      font-size: 14px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: transform 0.3s ease-in-out;
-      background-image: url('./images/card.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
