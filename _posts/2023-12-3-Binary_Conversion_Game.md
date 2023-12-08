@@ -78,13 +78,6 @@ type: hacks
         <p>00001000 (2^3): Represents 2^3 = 8
         <p>00010000 (2^4): Represents 2^4 = 16
         <p> etc.
-<body>
-    <main>
-        <p>Convert the binary number to decimal:</p>
-        <button onclick="checkGuess()">Test Your Knowledge</button>
-    </main>
-</body>
-
 {% assign BITS = 8 %}
 
 <style>
@@ -234,3 +227,9 @@ Liquid for loop includes last number, thus the Minus
         }
     }
 </script>
+<body>
+    <main>
+        <p>Convert the binary number to decimal:</p>
+        <button onclick="checkGuess()">Test Your Knowledge</button>
+    </main>
+</body>
