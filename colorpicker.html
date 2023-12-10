@@ -3,30 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Color Picker</title>
+  <title>Color Matching Game</title>
   <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
     #colorPicker {
       width: 200px;
       height: 200px;
       border: 2px solid #000;
       cursor: pointer;
+      image-rendering: pixelated; /* Increase pixelation */
     }
 
     #colorInfo {
-      margin-top: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #targetColor {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #feedback {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #0077cc; /* Hint color */
+    }
+
+    #levelInfo {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #instructions {
+      margin-top: 20px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
   <div id="colorPicker" onclick="pickColor(event)"></div>
-  <div id="colorInfo">Selected Color: <span id="selectedColor">#000000</span></div>
+  <div id="colorInfo">
+    <p>Your Color:</p>
+    <p>RGB: <span id="rgbColor"></span></p>
+    <p>Hex: <span id="hexColor"></span></p>
+  </div>
+  <div id="targetColor">
+    <p>Target Color:</p>
+    <p>RGB: <span id="targetRGB"></span></p>
+    <p>Hex: <span id="targetHex"></span></p>
+  </div>
+  <div id="feedback"></div>
+  <div id="levelInfo"></div>
+  <button onclick="newColor()">New Color</button>
+  <div id="instructions">
+    <p>Instructions:</p>
+    <p>Try to match the target color by clicking on the color picker.</p>
+    <p>Use the RGB and hex values as references to adjust your selection.</p>
+    <p>Advance to the next level by matching the current target color.</p>
+    <p>Click "New Color" to generate a new target color within the current level.</p>
+  </div>
 
   <script>
+    let targetColor;
+    let currentLevel = 1;
+
+    initializeLevel();
+
+    function initializeLevel() {
+      targetColor = generateRandomColor();
+      updateTargetColor();
+      updateLevelInfo();
+    }
+
     function pickColor(event) {
       const colorPicker = document.getElementById('colorPicker');
-      const colorInfo = document.getElementById('colorInfo');
-      const selectedColorSpan = document.getElementById('selectedColor');
+      const rgbColorSpan = document.getElementById('rgbColor');
+      const hexColorSpan = document.getElementById('hexColor');
+      const feedbackDiv = document.getElementById('feedback');
 
       // Get the position of the click relative to the color picker
       const x = event.offsetX / colorPicker.clientWidth;
@@ -42,10 +106,64 @@
 
       // Update the background color of the color picker and display the selected color
       colorPicker.style.backgroundColor = hexColor;
-      selectedColorSpan.textContent = hexColor;
+      rgbColorSpan.textContent = `${r}, ${g}, ${b}`;
+      hexColorSpan.textContent = hexColor;
 
-      // You can use the RGB values for further processing if needed
-      console.log(`RGB: ${r}, ${g}, ${b}`);
+      // Check if the selected color matches the target color
+      const isMatch = checkColorMatch({ r, g, b });
+      
+      // Provide hints
+      const hint = calculateColorDifference({ r, g, b });
+      feedbackDiv.textContent = isMatch ? 'Matched!' : `Hint: ${hint}`;
+
+      // If matched, move to the next level
+      if (isMatch) {
+        currentLevel++;
+        initializeLevel();
+      }
+    }
+
+    function newColor() {
+      targetColor = generateRandomColor();
+      updateTargetColor();
+      updateLevelInfo();
+    }
+
+    function generateRandomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = 0; // You can customize this value based on your requirements
+      return { r, g, b };
+    }
+
+    function updateTargetColor() {
+      const targetColorSpan = document.getElementById('targetColor');
+      const targetRGBSpan = document.getElementById('targetRGB');
+      const targetHexSpan = document.getElementById('targetHex');
+
+      targetColorSpan.style.backgroundColor = rgbToHex(targetColor.r, targetColor.g, targetColor.b);
+      targetRGBSpan.textContent = `${targetColor.r}, ${targetColor.g}, ${targetColor.b}`;
+      targetHexSpan.textContent = rgbToHex(targetColor.r, targetColor.g, targetColor.b);
+    }
+
+    function updateLevelInfo() {
+      const levelInfoDiv = document.getElementById('levelInfo');
+      levelInfoDiv.textContent = `Level: ${currentLevel}`;
+    }
+
+    function checkColorMatch(selectedColor) {
+      return (
+        selectedColor.r === targetColor.r &&
+        selectedColor.g === targetColor.g &&
+        selectedColor.b === targetColor.b
+      );
+    }
+
+    function calculateColorDifference(selectedColor) {
+      const difference = Math.abs(selectedColor.r - targetColor.r) +
+                         Math.abs(selectedColor.g - targetColor.g) +
+                         Math.abs(selectedColor.b - targetColor.b);
+      return difference > 50 ? 'Too far off!' : 'Close, keep trying!';
     }
 
     function rgbToHex(r, g, b) {
@@ -59,3 +177,5 @@
   </script>
 </body>
 </html>
+
+

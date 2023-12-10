@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decoder</title>
+</head>
+<body>
+
+  <label for="inputValue">Input Value:</label>
+  <input type="text" id="inputValue" placeholder="Enter value">
+  <br>
+  <label for="inputType">Select Input Type:</label>
+  <select id="inputType">
+    <option value="hex">Hexadecimal</option>
+    <option value="rgb">RGB Values</option>
+    <option value="binary">Binary Numbers</option>
+    <option value="ascii">ASCII Code</option>
+  </select>
+  <br>
+  <button onclick="decode()">Decode</button>
+  <div id="result"></div>
+
+  <script>
+    function decode() {
+      const inputValue = document.getElementById('inputValue').value;
+      const inputType = document.getElementById('inputType').value;
+      let result = '';
+
+      switch (inputType) {
+        case 'hex':
+          result = hexToAscii(inputValue);
+          break;
+        case 'rgb':
+          result = rgbToAscii(inputValue);
+          break;
+        case 'binary':
+          result = binaryToAscii(inputValue);
+          break;
+        case 'ascii':
+          result = asciiToCharacter(inputValue);
+          break;
+        default:
+          result = 'Invalid input type';
+      }
+
+      displayResult(result);
+    }
+
+    function hexToAscii(hexValue) {
+      const decimalValue = parseInt(hexValue, 16);
+      return String.fromCharCode(decimalValue);
+    }
+
+    function rgbToAscii(rgbValue) {
+      const rgbArray = rgbValue.split(',').map(Number);
+      const decimalValue = (rgbArray[0] + rgbArray[1] + rgbArray[2]) % 255;
+      return String.fromCharCode(decimalValue);
+    }
+
+    function binaryToAscii(binaryValue) {
+      const decimalValue = parseInt(binaryValue, 2);
+      return String.fromCharCode(decimalValue);
+    }
+
+    function asciiToCharacter(asciiValue) {
+      const decimalValue = parseInt(asciiValue);
+      return String.fromCharCode(decimalValue);
+    }
+
+    function displayResult(result) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<p>Decoded Character: ${result}</p>`;
+    }
+  </script>
+
+</body>
+</html>
