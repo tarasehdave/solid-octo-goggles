@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Color Picker</title>
+  <style>
+    #colorPicker {
+      width: 200px;
+      height: 200px;
+      border: 2px solid #000;
+      cursor: pointer;
+    }
+
+    #colorInfo {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="colorPicker" onclick="pickColor(event)"></div>
+  <div id="colorInfo">Selected Color: <span id="selectedColor">#000000</span></div>
+
+  <script>
+    function pickColor(event) {
+      const colorPicker = document.getElementById('colorPicker');
+      const colorInfo = document.getElementById('colorInfo');
+      const selectedColorSpan = document.getElementById('selectedColor');
+
+      // Get the position of the click relative to the color picker
+      const x = event.offsetX / colorPicker.clientWidth;
+      const y = event.offsetY / colorPicker.clientHeight;
+
+      // Calculate the RGB values based on the position
+      const r = Math.floor(x * 255);
+      const g = Math.floor((1 - y) * 255);
+      const b = 0; // You can customize this value based on your requirements
+
+      // Convert RGB to hex
+      const hexColor = rgbToHex(r, g, b);
+
+      // Update the background color of the color picker and display the selected color
+      colorPicker.style.backgroundColor = hexColor;
+      selectedColorSpan.textContent = hexColor;
+
+      // You can use the RGB values for further processing if needed
+      console.log(`RGB: ${r}, ${g}, ${b}`);
+    }
+
+    function rgbToHex(r, g, b) {
+      return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+
+    function componentToHex(c) {
+      const hex = c.toString(16);
+      return hex.length === 1 ? "0" + hex : hex;
+    }
+  </script>
+</body>
+</html>
