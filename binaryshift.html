@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Shift Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #F4F4F4;
+        }
+        #app {
+            background-color: white;
+            margin: 0 auto;
+            width: 80%;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .shift-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .shift-buttons button:hover {
+            background-color: #45A049;
+        }
+        #binaryOutput, #decimalOutput, #shiftExplanation, #feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Binary Shift Simulator</h1>
+        <p id="instructions">Enter a binary number or generate a random one, then apply shift operations to see the results.</p>
+        <input type="text" id="binaryInput" placeholder="Enter Binary Number" maxlength="16">
+        <button onclick="generateRandomBinary()">Generate Random</button>
+        <div class="shift-buttons">
+            <button onclick="shiftLeft()">Shift Left (<<)</button>
+            <button onclick="shiftRight()">Shift Right (>>)</button>
+        </div>
+        <div id="binaryOutput">Shifted Binary: </div>
+        <div id="decimalOutput">Decimal: </div>
+        <div id="shiftExplanation">Explanation: </div>
+        <div id="feedback"></div>
+    </div>
+    <script>
+        function isValidBinary(binary) {
+            return /^[01]+$/.test(binary);
+        }
+        function shiftLeft() {
+            let binary = document.getElementById('binaryInput').value;
+            if (isValidBinary(binary)) {
+                let shifted = binary.substring(1) + '0';
+                updateOutput(shifted, "Shifting left by 1 bit is equivalent to multiplying by 2.");
+            } else {
+                provideFeedback("Invalid binary input. Please enter a binary number.", true);
+            }
+        }
+        function shiftRight() {
+            let binary = document.getElementById('binaryInput').value;
+            if (isValidBinary(binary)) {
+                let shifted = '0' + binary.substring(0, binary.length - 1);
+                updateOutput(shifted, "Shifting right by 1 bit is equivalent to dividing by 2 (ignoring remainder).");
+            } else {
+                provideFeedback("Invalid binary input. Please enter a binary number.", true);
+            }
+        }
+        function generateRandomBinary() {
+            let randomBinary = '';
+            for(let i = 0; i < 16; i++) {
+                randomBinary += Math.round(Math.random()).toString();
+            }
+            document.getElementById('binaryInput').value = randomBinary;
+            shiftLeft(); // Automatically show left shift on random generation
+        }
+        function updateOutput(shiftedBinary, explanation) {
+            document.getElementById('binaryOutput').innerText = `Shifted Binary: ${shiftedBinary}`;
+            document.getElementById('decimalOutput').innerText = `Decimal: ${parseInt(shiftedBinary, 2)}`;
+            document.getElementById('shiftExplanation').innerText = `Explanation: ${explanation}`;
+            provideFeedback("Shift operation performed successfully.");
+        }
+        function provideFeedback(message, isError = false) {
+            let feedbackElement = document.getElementById('feedback');
+            feedbackElement.className = isError ? 'error' : 'success';
+            feedbackElement.innerText = message;
+        }
+    </script>
+</body>
+</html>
