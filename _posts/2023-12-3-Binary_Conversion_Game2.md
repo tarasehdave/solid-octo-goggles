@@ -10,7 +10,7 @@ hide: true
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Binary Number Guessing Game</title>
+    <title>Welcome to the Binary Number Conversion Game!</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -94,7 +94,6 @@ hide: true
 </head>
 <body>
 
-<h1>Binary Number Guessing Game</h1>
 <p>Convert the following binary number to decimal and enter the decimal value:</p>
 
 <!-- Display the binary version on the screen -->
@@ -103,8 +102,8 @@ hide: true
 <!-- Provide an input field for the user's guess -->
 <label for="userGuess">Enter your guess in decimal:</label>
 <input type="text" id="userGuess">
-<button onclick="checkGuess()">Guess Now</button>
-<button onclick="reload()">Try Again</button>
+<button onclick="checkGuess()">Enter</button>
+<button onclick="reload()">Reset</button>
 
 <!-- Display the result on the page -->
 <div id="result"></div>
@@ -116,8 +115,8 @@ hide: true
   <!-- Instructions Modal -->
   <div id="instructions-modal">
       <div id="instructions-content">
-          <h2>Instructions for this 2 Player Game:</h2>
-          <p>Goal: Be the first player to move forward 10 spaces and cross the finish line. <br><br> Getting Started: Click the "Start Game" button to initiate the game, then select the car you want. Start Game when you're ready. <br><br> How to play: A target decimal number will be randomly generated for each turn. Convert this number to the appropriate binary number and submit your answer. If your binary guess is correct, your car moves forward by one space. If your guess is incorrect, you lose your turn and your opponent gets a chance to get the right answer.</p>
+          <h2>Instructions for this Game:</h2>
+          <p>Correctly convert the provided binary number to decimal. <br><br> How to Start: Enter your decimal guess into the white box. Click the "Enter" button to check the answer.  <br><br> How to play: A target decimal number will be randomly generated for each turn. Convert this number to the appropriate binary number and submit your answer. If your binary guess is correct, the screen will give you a correct prompt. If it is incorrect, you will can click the "Reset" button to try again.</p>
 
   <button id="close-button" onclick="closeInstructions()">Close</button>
         </div>
@@ -127,17 +126,6 @@ hide: true
 <div id="decimalRange">
     <span>0</span>
     <span>255</span>
-</div>
-
-<!-- Display the distance bars -->
-<div class="distanceBar" id="actualDistanceBar">
-    <div class="distanceFill" id="actualDistanceFill"></div>
-    <span class="distanceText">Actual Value</span>
-</div>
-
-<div class="distanceBar" id="guessedDistanceBar">
-    <div class="distanceFill" id="guessedDistanceFill"></div>
-    <span class="distanceText">Guessed Value</span>
 </div>
 
 <script>
@@ -174,17 +162,6 @@ hide: true
 
         // Update the distance bars
         updateDistanceBar(userDecimalGuess);
-    }
-
-    // Function to update the distance bars
-    function updateDistanceBar(userDecimalGuess) {
-        const maxDistance = 255;
-        const actualDistancePercentage = (correctDecimal / maxDistance) * 100;
-        const guessedDistancePercentage = (userDecimalGuess / maxDistance) * 100;
-
-        // Update the width of the distance fills in the bars
-        document.getElementById('actualDistanceFill').style.width = `${actualDistancePercentage}%`;
-        document.getElementById('guessedDistanceFill').style.width = `${guessedDistancePercentage}%`;
     }
 
     // Function to show the instructions modal
