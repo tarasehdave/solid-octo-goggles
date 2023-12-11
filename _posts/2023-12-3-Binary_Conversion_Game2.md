@@ -100,7 +100,7 @@ hide: true
 <div id="binaryDisplay"></div>
 
 <!-- Provide an input field for the user's guess -->
-<label for="userGuess">Enter your guess in decimal:</label>
+<label for="userGuess">Answer in decimal:</label>
 <input type="text" id="userGuess">
 <button onclick="checkGuess()">Enter</button>
 <button onclick="reload()">Reset</button>
@@ -121,12 +121,6 @@ hide: true
   <button id="close-button" onclick="closeInstructions()">Close</button>
         </div>
   </div>
-
-<!-- Display the decimal range -->
-<div id="decimalRange">
-    <span>0</span>
-    <span>255</span>
-</div>
 
 <script>
     function reload() {
