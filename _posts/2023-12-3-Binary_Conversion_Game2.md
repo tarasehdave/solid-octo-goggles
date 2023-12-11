@@ -93,15 +93,88 @@ hide: true
     </style>
 </head>
 <body>
-    <main>
-    <div>Hints:
-        <p>Binary Place Values:
+
+<p>Convert the following binary number to decimal and enter the decimal value:</p>
+
+<!-- Display the binary version on the screen -->
+<div id="binaryDisplay"></div>
+
+<!-- Provide an input field for the user's guess -->
+<label for="userGuess">Answer in decimal:</label>
+<input type="text" id="userGuess">
+<button onclick="checkGuess()">Enter</button>
+<button onclick="reload()">Reset</button>
+
+<!-- Display the result on the page -->
+<div id="result"></div>
+
+<!-- Message popup for correct/incorrect answers -->
+  <div id="message-popup" class="hidden"></div>
+
+  <button id="instructions-button" onclick="showInstructions()">Instructions</button>
+  <!-- Instructions Modal -->
+  <div id="instructions-modal">
+      <div id="instructions-content">
+          <h2>Instructions for this Game:</h2>
+          <p>Correctly convert the provided binary number to decimal. <br><br> How to Start: Enter your decimal guess into the white box. Click the "Enter" button to check the answer.  <br><br> How to play: A target decimal number will be randomly generated for each turn. Convert this number to the appropriate binary number and submit your answer. If your binary guess is correct, the screen will give you a correct prompt. If it is incorrect, you will can click the "Reset" button to try again.<br><br> Hints: <p>Binary Place Values:
         <p>00000001 (2^0): Represents 2^0 = 1
         <p>00000010 (2^1): Represents 2^1 = 2
         <p>00000100 (2^2): Represents 2^2 = 4
         <p>00001000 (2^3): Represents 2^3 = 8
         <p>00010000 (2^4): Represents 2^4 = 16
-        <p> etc.
+        <p> etc.</p>
+
+  <button id="close-button" onclick="closeInstructions()">Close</button>
+        </div>
+  </div>
+
+<script>
+    function reload() {
+        location.reload()
+    }
+    // Function to convert decimal to binary with leading zeroes
+    function decimalToBinary(decimal) {
+        // Use toString(2) to convert to binary and padStart to add leading zeroes
+        return decimal.toString(2).padStart(8, '0');
+    }
+
+    // Generate a random decimal number between 0 and 255
+    const correctDecimal = Math.floor(Math.random() * 256);
+
+    // Convert the decimal number to binary
+    const correctBinary = decimalToBinary(correctDecimal);
+
+    // Display the binary version on the screen after the page has loaded
+    document.getElementById('binaryDisplay').textContent = `Binary: ${correctBinary}`;
+
+    // Function to check the user's input
+    function checkGuess() {
+        // Get the user's input
+        const userDecimalGuess = parseInt(document.getElementById('userGuess').value);
+
+        // Check if the guess is correct
+        const resultElement = document.getElementById('result');
+        if (userDecimalGuess === correctDecimal) {
+            resultElement.textContent = 'Congratulations! You guessed the correct decimal value.';
+        } else {
+            resultElement.textContent = `Sorry, the correct decimal value was ${correctDecimal}. Try again!`;
+        }
+
+        // Update the distance bars
+        updateDistanceBar(userDecimalGuess);
+    }
+
+    // Function to show the instructions modal
+    function showInstructions() {
+        document.getElementById('instructions-modal').style.display = 'flex';
+    }
+
+    // Function to close the instructions modal
+    function closeInstructions() {
+        document.getElementById('instructions-modal').style.display = 'none';
+    }
+</script>
+
 {% assign BITS = 8 %}
 <header> Here is a visual representation! <header>
 <style>
@@ -251,79 +324,4 @@ Liquid for loop includes last number, thus the Minus
         }
     }
 </script>
-<p>Convert the following binary number to decimal and enter the decimal value:</p>
-
-<!-- Display the binary version on the screen -->
-<div id="binaryDisplay"></div>
-
-<!-- Provide an input field for the user's guess -->
-<label for="userGuess">Answer in decimal:</label>
-<input type="text" id="userGuess">
-<button onclick="checkGuess()">Enter</button>
-<button onclick="reload()">Reset</button>
-
-<!-- Display the result on the page -->
-<div id="result"></div>
-
-<!-- Message popup for correct/incorrect answers -->
-  <div id="message-popup" class="hidden"></div>
-
-  <button id="instructions-button" onclick="showInstructions()">Instructions</button>
-  <!-- Instructions Modal -->
-  <div id="instructions-modal">
-      <div id="instructions-content">
-          <h2>Instructions for this Game:</h2>
-          <p>Correctly convert the provided binary number to decimal. <br><br> How to Start: Enter your decimal guess into the white box. Click the "Enter" button to check the answer.  <br><br> How to play: A target decimal number will be randomly generated for each turn. Convert this number to the appropriate binary number and submit your answer. If your binary guess is correct, the screen will give you a correct prompt. If it is incorrect, you will can click the "Reset" button to try again.</p>
-
-  <button id="close-button" onclick="closeInstructions()">Close</button>
-        </div>
-  </div>
-
-<script>
-    function reload() {
-        location.reload()
-    }
-    // Function to convert decimal to binary with leading zeroes
-    function decimalToBinary(decimal) {
-        // Use toString(2) to convert to binary and padStart to add leading zeroes
-        return decimal.toString(2).padStart(8, '0');
-    }
-
-    // Generate a random decimal number between 0 and 255
-    const correctDecimal = Math.floor(Math.random() * 256);
-
-    // Convert the decimal number to binary
-    const correctBinary = decimalToBinary(correctDecimal);
-
-    // Display the binary version on the screen after the page has loaded
-    document.getElementById('binaryDisplay').textContent = `Binary: ${correctBinary}`;
-
-    // Function to check the user's input
-    function checkGuess() {
-        // Get the user's input
-        const userDecimalGuess = parseInt(document.getElementById('userGuess').value);
-
-        // Check if the guess is correct
-        const resultElement = document.getElementById('result');
-        if (userDecimalGuess === correctDecimal) {
-            resultElement.textContent = 'Congratulations! You guessed the correct decimal value.';
-        } else {
-            resultElement.textContent = `Sorry, the correct decimal value was ${correctDecimal}. Try again!`;
-        }
-
-        // Update the distance bars
-        updateDistanceBar(userDecimalGuess);
-    }
-
-    // Function to show the instructions modal
-    function showInstructions() {
-        document.getElementById('instructions-modal').style.display = 'flex';
-    }
-
-    // Function to close the instructions modal
-    function closeInstructions() {
-        document.getElementById('instructions-modal').style.display = 'none';
-    }
-</script>
-
 </body>
