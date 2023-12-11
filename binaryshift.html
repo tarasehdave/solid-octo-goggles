@@ -3,110 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Binary Shift Simulator</title>
     <style>
         body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-image: url('./images/binaryshift.png');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-        #app {
-            background-color: white;
-            margin: 0 auto;
-            width: 80%;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('./images/colorplanet.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
         }
-        input, button {
-            margin: 10px;
+
+        .color-picker {
+            text-align: center;
+        }
+
+        input {
+            width: 100px;
+            margin: 0 10px;
+        }
+
+        #colorDisplay {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            border: 1px solid #000;
+        }
+
+        #hexBinaryDisplay {
+            margin-top: 20px;
+        }
+
+        #canvas {
+            margin-top: 30px;
+            border: 1px solid #000;
+        }
+
+        #clearButton {
+            margin-top: 10px;
             padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-        .shift-buttons button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
+            background-color: #ff0000;
+            color: #fff;
             cursor: pointer;
         }
-        .shift-buttons button:hover {
-            background-color: #45A049;
-        }
-        #binaryOutput, #decimalOutput, #shiftExplanation, #feedback {
+
+        #instructions {
             margin-top: 20px;
-            font-size: 18px;
-            color: #333;
-        }
-        .error {
-            color: red;
-        }
-        .success {
-            color: green;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            text-align: left;
         }
     </style>
+    <title>Interactive Color Picker</title>
 </head>
 <body>
-    <div id="app">
-        <h1>Binary Shift Simulator</h1>
-        <p id="instructions">Enter a binary number or generate a random one, then apply shift operations to see the results.</p>
-        <input type="text" id="binaryInput" placeholder="Enter Binary Number" maxlength="16">
-        <button onclick="generateRandomBinary()">Generate Random</button>
-        <div class="shift-buttons">
-            <button onclick="shiftLeft()">Shift Left (<<)</button>
-            <button onclick="shiftRight()">Shift Right (>>)</button>
+    <div class="color-picker">
+        <label for="red">Red:</label>
+        <input type="range" id="red" min="0" max="255" value="0">
+        <span id="redValue">0</span>
+
+        <label for="green">Green:</label>
+        <input type="range" id="green" min="0" max="255" value="0">
+        <span id="greenValue">0</span>
+
+        <label for="blue">Blue:</label>
+        <input type="range" id="blue" min="0" max="255" value="0">
+        <span id="blueValue">0</span>
+
+        <div id="colorDisplay"></div>
+        <div id="hexBinaryDisplay">
+            <p>Hex: <span id="hexValue"></span></p>
+            <p>Binary: <span id="binaryValue"></span></p>
         </div>
-        <div id="binaryOutput">Shifted Binary: </div>
-        <div id="decimalOutput">Decimal: </div>
-        <div id="shiftExplanation">Explanation: </div>
-        <div id="feedback"></div>
+
+        <canvas id="canvas" width="400" height="300"></canvas>
+        <div id="clearButton">Clear Canvas</div>
+
+        <div id="instructions">
+            <h3>How to Use:</h3>
+            <ul>
+                <li>Adjust the sliders to choose the desired color.</li>
+                <li>The color display will show the selected color.</li>
+                <li>Hex and binary representations of the color are displayed below.</li>
+                <li>Click and drag on the canvas to draw using the selected color.</li>
+                <li>Click "Clear Canvas" to start drawing on a new canvas.</li>
+            </ul>
+        </div>
     </div>
+
     <script>
-        function isValidBinary(binary) {
-            return /^[01]+$/.test(binary);
-        }
-        function shiftLeft() {
-            let binary = document.getElementById('binaryInput').value;
-            if (isValidBinary(binary)) {
-                let shifted = binary.substring(1) + '0';
-                updateOutput(shifted, "Shifting left by 1 bit is equivalent to multiplying by 2.");
-            } else {
-                provideFeedback("Invalid binary input. Please enter a binary number.", true);
+        document.addEventListener('DOMContentLoaded', function () {
+            const redSlider = document.getElementById('red');
+            const greenSlider = document.getElementById('green');
+            const blueSlider = document.getElementById('blue');
+            const redValue = document.getElementById('redValue');
+            const greenValue = document.getElementById('greenValue');
+            const blueValue = document.getElementById('blueValue');
+            const colorDisplay = document.getElementById('colorDisplay');
+            const hexValue = document.getElementById('hexValue');
+            const binaryValue = document.getElementById('binaryValue');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const clearButton = document.getElementById('clearButton');
+            let isDrawing = false;
+
+            function updateColor() {
+                const red = redSlider.value;
+                const green = greenSlider.value;
+                const blue = blueSlider.value;
+
+                redValue.textContent = red;
+                greenValue.textContent = green;
+                blueValue.textContent = blue;
+
+                const hex = rgbToHex(red, green, blue);
+                const binary = rgbToBinary(red, green, blue);
+
+                colorDisplay.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+                hexValue.textContent = hex;
+                binaryValue.textContent = binary;
+
+                ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
             }
-        }
-        function shiftRight() {
-            let binary = document.getElementById('binaryInput').value;
-            if (isValidBinary(binary)) {
-                let shifted = '0' + binary.substring(0, binary.length - 1);
-                updateOutput(shifted, "Shifting right by 1 bit is equivalent to dividing by 2 (ignoring remainder).");
-            } else {
-                provideFeedback("Invalid binary input. Please enter a binary number.", true);
+
+            function rgbToHex(r, g, b) {
+                const toHex = (value) => value.toString(16).padStart(2, '0');
+                return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
             }
-        }
-        function generateRandomBinary() {
-            let randomBinary = '';
-            for(let i = 0; i < 16; i++) {
-                randomBinary += Math.round(Math.random()).toString();
+
+            function rgbToBinary(r, g, b) {
+                const toBinary = (value) => value.toString(2).padStart(8, '0');
+                return `${toBinary(r)} ${toBinary(g)} ${toBinary(b)}`;
             }
-            document.getElementById('binaryInput').value = randomBinary;
-            shiftLeft(); // Automatically show left shift on random generation
-        }
-        function updateOutput(shiftedBinary, explanation) {
-            document.getElementById('binaryOutput').innerText = `Shifted Binary: ${shiftedBinary}`;
-            document.getElementById('decimalOutput').innerText = `Decimal: ${parseInt(shiftedBinary, 2)}`;
-            document.getElementById('shiftExplanation').innerText = `Explanation: ${explanation}`;
-            provideFeedback("Shift operation performed successfully.");
-        }
-        function provideFeedback(message, isError = false) {
-            let feedbackElement = document.getElementById('feedback');
-            feedbackElement.className = isError ? 'error' : 'success';
-            feedbackElement.innerText = message;
-        }
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                ctx.lineCap = 'round';
+                ctx.lineWidth = 5;
+                ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            }
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            redSlider.addEventListener('input', updateColor);
+            greenSlider.addEventListener('input', updateColor);
+            blueSlider.addEventListener('input', updateColor);
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            clearButton.addEventListener('click', clearCanvas);
+
+            // Initialize the color picker
+            updateColor();
+        });
     </script>
 </body>
 </html>
