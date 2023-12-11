@@ -5,6 +5,7 @@ layout: default
 description: A Binary Math application of lightbulbs that will be used for the binary conversion game
 courses: { compsci: {week: 2} }
 type: hacks
+hide: True
 ---
 
 {% assign BITS = 8 %}
