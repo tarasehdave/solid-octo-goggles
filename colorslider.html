@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-       body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-image: url('./images/colorplanet.webp');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('./images/colorplanet.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 
         .color-picker {
             text-align: center;
@@ -35,8 +35,21 @@
         #hexBinaryDisplay {
             margin-top: 20px;
         }
+
+        #canvas {
+            margin-top: 30px;
+            border: 1px solid #000;
+        }
+
+        #clearButton {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ff0000;
+            color: #fff;
+            cursor: pointer;
+        }
     </style>
-    <title>Color Picker</title>
+    <title>Interactive Color Picker</title>
 </head>
 <body>
     <div class="color-picker">
@@ -57,6 +70,9 @@
             <p>Hex: <span id="hexValue"></span></p>
             <p>Binary: <span id="binaryValue"></span></p>
         </div>
+
+        <canvas id="canvas" width="400" height="300"></canvas>
+        <div id="clearButton">Clear Canvas</div>
     </div>
 
     <script>
@@ -70,6 +86,10 @@
             const colorDisplay = document.getElementById('colorDisplay');
             const hexValue = document.getElementById('hexValue');
             const binaryValue = document.getElementById('binaryValue');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const clearButton = document.getElementById('clearButton');
+            let isDrawing = false;
 
             function updateColor() {
                 const red = redSlider.value;
@@ -86,6 +106,8 @@
                 colorDisplay.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
                 hexValue.textContent = hex;
                 binaryValue.textContent = binary;
+
+                ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
             }
 
             function rgbToHex(r, g, b) {
@@ -98,9 +120,41 @@
                 return `${toBinary(r)} ${toBinary(g)} ${toBinary(b)}`;
             }
 
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                ctx.lineCap = 'round';
+                ctx.lineWidth = 5;
+                ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            }
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
             redSlider.addEventListener('input', updateColor);
             greenSlider.addEventListener('input', updateColor);
             blueSlider.addEventListener('input', updateColor);
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            clearButton.addEventListener('click', clearCanvas);
 
             // Initialize the color picker
             updateColor();
@@ -108,4 +162,3 @@
     </script>
 </body>
 </html>
-
