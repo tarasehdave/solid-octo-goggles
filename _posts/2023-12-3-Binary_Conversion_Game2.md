@@ -10,7 +10,6 @@ hide: true
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Binary Number Conversion Game!</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -92,6 +91,7 @@ hide: true
         }
     </style>
 </head>
+ <title>Welcome to the Binary Number Conversion Game!</title>
 <body>
 
 <p>Convert the following binary number to decimal and enter the decimal value:</p>
@@ -111,11 +111,11 @@ hide: true
 <!-- Message popup for correct/incorrect answers -->
   <div id="message-popup" class="hidden"></div>
 
-  <button id="instructions-button" onclick="showInstructions()">Instructions</button>
+  <button id="instructions-button" onclick="showInstructions()">Open Information</button>
   <!-- Instructions Modal -->
   <div id="instructions-modal">
       <div id="instructions-content">
-          <h2>Instructions for this Game:</h2>
+          <h2>Instructions:</h2>
           <p>Correctly convert the provided binary number to decimal. <br><br> How to Start: Enter your decimal guess into the white box. Click the "Enter" button to check the answer.  <br><br> How to play: A target decimal number will be randomly generated for each turn. Convert this number to the appropriate binary number and submit your answer. If your binary guess is correct, the screen will give you a correct prompt. If it is incorrect, you will can click the "Reset" button to try again.<br><br> Hints: <p>Binary Place Values:
         <p>00000001 (2^0): Represents 2^0 = 1
         <p>00000010 (2^1): Represents 2^1 = 2
