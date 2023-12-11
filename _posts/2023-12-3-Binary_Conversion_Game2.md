@@ -192,4 +192,5 @@ hide: true
         // Function to check the user's input
         function checkGuess() {
             // Get the user's input
-            const userDecimalGuess = parseInt(document.getElementById('userGuess').
+            const userDecimalGuess = parseInt(document.getElementById('userGuess')).
+        }
