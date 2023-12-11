@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB to Hex Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-image: url('./images/clouds.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        input {
+            width: 50px;
+            text-align: center;
+        }
+        #color-display {
+            margin-top: 20px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+        }
+        #canvas-container {
+            margin-top: 20px;
+            position: relative;
+        }
+        #canvas {
+            border: 1px solid #000;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table, th, td {
+            border: 1px solid #000;
+        }
+        .info-dropdown {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #000;
+            padding: 10px;
+            display: none;
+            text-align: left;
+        }
+        .info-dropdown-btn {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>RGB to Hex Converter</h1>
+
+    <form id="rgbForm">
+        <label for="red">Red:</label>
+        <input type="number" id="red" min="0" max="255" value="0">
+
+        <label for="green">Green:</label>
+        <input type="number" id="green" min="0" max="255" value="0">
+
+        <label for="blue">Blue:</label>
+        <input type="number" id="blue" min="0" max="255" value="0">
+
+        <button type="button" onclick="convertAndDisplayColor()">Convert</button>
+    </form>
+
+    <div id="color-display"></div>
+    <div id="hex-display"></div>
+
+    <div id="canvas-container">
+        <canvas id="canvas" width="400" height="400" style="cursor: crosshair; border: 1px solid #000;"></canvas>
+        <button onclick="clearCanvas()">Clear Canvas</button>
+        <div class="info-dropdown" id="infoDropdown">
+            <p><strong>RGB to Hex Conversion</strong></p>
+            <p>RGB values represent colors using Red, Green, and Blue components.</p>
+            <p>The conversion to hexadecimal involves converting each component to base-16 (hex).</p>
+            <p>Example: RGB(173, 216, 230)</p>
+            <p><em>Red (173):</em> \(173 \div 16 = 10 \, (A), \, \text{remainder} = 13 \, (D) \, \Rightarrow \, \text{Hex} = AD\)</p>
+            <p><em>Green (216):</em> \(216 \div 16 = 13 \, (D), \, \text{remainder} = 8 \, \Rightarrow \, \text{Hex} = D8\)</p>
+            <p><em>Blue (230):</em> \(230 \div 16 = 14 \, (E), \, \text{remainder} = 6 \, \Rightarrow \, \text{Hex} = E6\)</p>
+            <p><strong>Combine Hex Components:</strong> AD (Red) + D8 (Green) + E6 (Blue) = <span id="combinedHex">ADD8E6</span></p>
+            <p>Therefore, RGB(173, 216, 230) in Hexadecimal is #ADD8E6.</p>
+            <p>The base-16 system uses letters A-F to represent values 10-15.</p>
+        </div>
+        <p class="info-dropdown-btn" onclick="toggleInfoDropdown()">How does RGB to Hex work?</p>
+    </div>
+
+    <h2>RGB Values Chart</h2>
+    <table>
+        <tr>
+            <th>Color Component</th>
+            <th>Decimal</th>
+            <th>Binary</th>
+            <th>Octal</th>
+            <th>Hexadecimal</th>
+        </tr>
+        <tr id="red-row">
+            <td>Red</td>
+            <td id="red-decimal">0</td>
+            <td id="red-binary">0</td>
+            <td id="red-octal">0</td>
+            <td id="red-hex">0</td>
+        </tr>
+        <tr id="green-row">
+            <td>Green</td>
+            <td id="green-decimal">0</td>
+            <td id="green-binary">0</td>
+            <td id="green-octal">0</td>
+            <td id="green-hex">0</td>
+        </tr>
+        <tr id="blue-row">
+            <td>Blue</td>
+            <td id="blue-decimal">0</td>
+            <td id="blue-binary">0</td>
+            <td id="blue-octal">0</td>
+            <td id="blue-hex">0</td>
+        </tr>
+    </table>
+
+    <script>
+        function rgbToHex(rgb) {
+            var hexCode = '';
+            for (var decimal of rgb) {
+                var hexComponent = decimal.toString(16).toUpperCase().padStart(2, '0');
+                hexCode += hexComponent;
+            }
+            return hexCode;
+        }
+
+        function hexToRgb(hex) {
+            var r = parseInt(hex.substring(0, 2), 16);
+            var g = parseInt(hex.substring(2, 4), 16);
+            var b = parseInt(hex.substring(4, 6), 16);
+
+            return [r, g, b];
+        }
+
+        function updateChart(red, green, blue) {
+            document.getElementById('red-decimal').innerText = red;
+            document.getElementById('red-binary').innerText = red.toString(2);
+            document.getElementById('red-octal').innerText = red.toString(8);
+            document.getElementById('red-hex').innerText = red.toString(16).toUpperCase();
+
+            document.getElementById('green-decimal').innerText = green;
+            document.getElementById('green-binary').innerText = green.toString(2);
+            document.getElementById('green-octal').innerText = green.toString(8);
+            document.getElementById('green-hex').innerText = green.toString(16).toUpperCase();
+
+            document.getElementById('blue-decimal').innerText = blue;
+            document.getElementById('blue-binary').innerText = blue.toString(2);
+            document.getElementById('blue-octal').innerText = blue.toString(8);
+            document.getElementById('blue-hex').innerText = blue.toString(16).toUpperCase();
+        }
+
+        function convertAndDisplayColor() {
+            var red = parseInt(document.getElementById('red').value);
+            var green = parseInt(document.getElementById('green').value);
+            var blue = parseInt(document.getElementById('blue').value);
+
+            if (isNaN(red) || isNaN(green) || isNaN(blue) ||
+                red < 0 || red > 255 ||
+                green < 0 || green > 255 ||
+                blue < 0 || blue > 255) {
+                alert("Please enter valid RGB values (0-255).");
+                return;
+            }
+
+            // Display the color
+            var colorDisplay = document.getElementById('color-display');
+            var hexColor = rgbToHex([red, green, blue]);
+            colorDisplay.style.backgroundColor = '#' + hexColor;
+
+            // Display the hexadecimal color
+            var hexDisplay = document.getElementById('hex-display');
+            hexDisplay.innerText = "Hexadecimal color: #" + hexColor;
+
+            // Update the chart with RGB values
+            updateChart(red, green, blue);
+
+            // Enable drawing on the canvas with the selected color
+            enableDrawing(hexColor);
+        }
+
+        function enableDrawing(color) {
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            var isDrawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                var x = e.clientX - canvas.offsetLeft;
+                var y = e.clientY - canvas.offsetTop;
+
+                var rgbColor = hexToRgb(color);
+                ctx.fillStyle = `rgb(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]})`;
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+            }
+        }
+
+        function clearCanvas() {
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function toggleInfoDropdown() {
+            var dropdown = document.getElementById('infoDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
