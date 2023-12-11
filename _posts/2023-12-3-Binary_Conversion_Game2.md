@@ -1,9 +1,9 @@
 ---
 toc: false
 layout: post
-title: Binary Quiz
-courses: { compsci: {week: 14 } } 
-type: tangibles
+title: Binary Conversion Game V2
+courses: { compsci: {week: 2 } } 
+type: hacks
 hide: true
 ---
 <html lang="en">
