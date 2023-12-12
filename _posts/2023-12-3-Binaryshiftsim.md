@@ -91,7 +91,7 @@ This simulator helps in understanding binary shift operations (left and right) w
             } else {
                 provideFeedback("Invalid binary input. Please enter a binary number.", true);
             }
-        }
+        }  
 
         function generateRandomBinary() {
             let randomBinary = '';
@@ -119,3 +119,4 @@ This simulator helps in understanding binary shift operations (left and right) w
     </script>
 </body>
 </html>
+
