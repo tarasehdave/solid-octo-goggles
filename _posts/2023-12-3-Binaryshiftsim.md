@@ -119,3 +119,4 @@ This simulator helps in understanding binary shift operations (left and right) w
     </script>
 </body>
 </html>
+
