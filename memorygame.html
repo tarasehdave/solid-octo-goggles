@@ -12,7 +12,7 @@
       height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
-      background-image: url('./images/istockphoto-829309362-612x612.jpeg');
+      background-image: url('./images/game.png');
       background-repeat: no-repeat;
       background-size: cover;
     }
@@ -89,7 +89,10 @@
 <body>
 
 <div>
+  <div style="">
     <h1 style="text-align: center;" class="title">Memory Game</h1>
+    <h5 style="text-align:center;color: rgb(25, 75, 211);">Hint! A's ASCII number is 65 and corresponding binary number is 1000001.<br>Use this as a reference for the rest of the pairs.<br><br></h5>
+  </div>
     <div id="game-board"></div>
 </div>
 
@@ -101,6 +104,7 @@
     // Duplicate the card values to create pairs
     const allCards = cardValues.concat(cardValues);
     const flippedCards = []
+    const cardIndex = []
 
     // Shuffle the cards using Fisher-Yates algorithm
     function shuffle(array) {
@@ -131,7 +135,13 @@
       cardContent.classList.add('card-content');
 
       const cardText = document.createElement('div');
-      cardText.textContent = `ASCII: ${asciiValue}\nBinary: ${binaryValue}`;
+      if(cardIndex.includes(value)){
+        cardText.textContent = `ASCII: ${asciiValue}`;
+      } else {
+        cardText.textContent = `Binary: ${binaryValue}`;
+      }
+      cardIndex.push(value)
+      
 
       const cardImage = document.createElement('img');
       //cardImage.src = url('./game.png'); // Replace with the path to your image
