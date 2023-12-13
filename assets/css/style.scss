@@ -88,3 +88,33 @@
     background-color: #e70f0f;
   }
 
+
+  body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.color-picker {
+    text-align: center;
+}
+
+input {
+    width: 100px;
+    margin: 0 10px;
+}
+
+#colorDisplay {
+    width: 150px;
+    height: 150px;
+    margin: 20px auto;
+    border: 1px solid #000;
+}
+
+#hexBinaryDisplay {
+    margin-top: 20px;
+}
+

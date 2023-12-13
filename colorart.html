@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Art Generator</title>
+  <style>
+    canvas {
+      border: 2px solid #000;
+    }
+
+    #instructions {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="numShapes">Number of Shapes:</label>
+  <input type="number" id="numShapes" value="50" min="1" max="200">
+  <br>
+  <label for="canvasSize">Canvas Size:</label>
+  <input type="number" id="canvasSize" value="500" min="100" max="1000">
+  <br>
+  <button onclick="generateArt()">Generate Art</button>
+  <canvas id="artCanvas"></canvas>
+  <div id="instructions">
+    <h3>How It Works:</h3>
+    <p>This digital art generator creates a canvas and draws random shapes with randomized colors.</p>
+    <p>Adjust the number of shapes and canvas size, then click "Generate Art" to create unique digital artwork!</p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('artCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function generateArt() {
+      const numShapes = document.getElementById('numShapes').value;
+      const canvasSize = document.getElementById('canvasSize').value;
+
+      canvas.width = canvasSize;
+      canvas.height = canvasSize;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < numShapes; i++) {
+        drawRandomShape();
+      }
+    }
+
+    function drawRandomShape() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const size = Math.random() * 50 + 10; // Random size between 10 and 60
+      const color = getRandomColor();
+
+      ctx.fillStyle = color;
+      
+      const shapeType = Math.random() < 0.5 ? 'circle' : 'rectangle';
+
+      if (shapeType === 'circle') {
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, 2 * Math.PI);
+        ctx.fill();
+      } else {
+        ctx.fillRect(x, y, size, size);
+      }
+
+      displayColorInfo(x, y, color);
+    }
+
+    function getRandomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function displayColorInfo(x, y, color) {
+      const hexColor = rgbToHex(color);
+      const infoBox = document.createElement('div');
+      infoBox.innerHTML = `<p>Position: (${Math.round(x)}, ${Math.round(y)})</p>
+                          <p>RGB: ${color}</p>
+                          <p>Hex: ${hexColor}</p>`;
+      document.body.appendChild(infoBox);
+    }
+
+    function rgbToHex(rgb) {
+      const rgbValues = rgb.match(/\d+/g);
+      return '#' + rgbValues.map(value => {
+        const hex = parseInt(value).toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+      }).join('');
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+
+

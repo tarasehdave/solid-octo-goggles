@@ -1,10 +1,11 @@
 ---
 toc: true
-title: Binary Conversion Game  Visualization
+title: Binary Conversion Game Visualization
 layout: default
 description: A Binary Math application of lightbulbs that will be used for the binary conversion game
 courses: { compsci: {week: 2} }
 type: hacks
+hide: true
 ---
 
 {% assign BITS = 8 %}

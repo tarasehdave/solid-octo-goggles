@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spaceship Color Changer</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('./images/colorplanet.webp');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .card {
+      width: 120px;
+      height: 120px;
+      background-color: rgba(37, 111, 195, 0.808);
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+      background-image: url('./images/card.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    #spaceship {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 30px;
+      border: 1px solid #fff;
+    }
+
+    #rgb-value, #ascii-8bit, #ascii-24bit {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #4c82af;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 25px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="spaceship"></div>
+  <div id="rgb-value"></div>
+  <div id="ascii-8bit"></div>
+  <div id="ascii-24bit"></div>
+  <button onclick="updateSpaceshipColor()">Generate New Color</button>
+
+  <script>
+    function getRandomRGB() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return { r, g, b };
+    }
+
+    function rgbToAscii(rgb) {
+      const asciiR = rgb.r.toString(2).padStart(8, '0');
+      const asciiG = rgb.g.toString(2).padStart(8, '0');
+      const asciiB = rgb.b.toString(2).padStart(8, '0');
+      const ascii24Bit = (rgb.r << 16 | rgb.g << 8 | rgb.b).toString(2).padStart(24, '0');
+      return { ascii8Bit: `${asciiR} ${asciiG} ${asciiB}`, ascii24Bit };
+    }
+
+    function updateSpaceshipColor() {
+      const rgb = getRandomRGB();
+      const spaceship = document.getElementById('spaceship');
+      const rgbValue = document.getElementById('rgb-value');
+      const ascii8bit = document.getElementById('ascii-8bit');
+      const ascii24bit = document.getElementById('ascii-24bit');
+
+      spaceship.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+      rgbValue.textContent = `RGB: (${rgb.r}, ${rgb.g}, ${rgb.b})`;
+
+      const asciiCodes = rgbToAscii(rgb);
+      ascii8bit.textContent = `8-bit ASCII: ${asciiCodes.ascii8Bit}`;
+      ascii24bit.textContent = `24-bit ASCII: ${asciiCodes.ascii24Bit}`;
+    }
+  </script>
+</body>
+</html>

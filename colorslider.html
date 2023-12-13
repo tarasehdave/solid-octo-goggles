@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('./images/colorplanet.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .color-picker {
+            text-align: center;
+        }
+
+        input {
+            width: 100px;
+            margin: 0 10px;
+        }
+
+        #colorDisplay {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            border: 1px solid #000;
+        }
+
+        #hexBinaryDisplay {
+            margin-top: 20px;
+        }
+
+        #canvas {
+            margin-top: 30px;
+            border: 1px solid #000;
+        }
+
+        #clearButton {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ff0000;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+    <title>Interactive Color Picker</title>
+</head>
+<body>
+    <div class="color-picker">
+        <label for="red">Red:</label>
+        <input type="range" id="red" min="0" max="255" value="0">
+        <span id="redValue">0</span>
+
+        <label for="green">Green:</label>
+        <input type="range" id="green" min="0" max="255" value="0">
+        <span id="greenValue">0</span>
+
+        <label for="blue">Blue:</label>
+        <input type="range" id="blue" min="0" max="255" value="0">
+        <span id="blueValue">0</span>
+
+        <div id="colorDisplay"></div>
+        <div id="hexBinaryDisplay">
+            <p>Hex: <span id="hexValue"></span></p>
+            <p>Binary: <span id="binaryValue"></span></p>
+        </div>
+
+        <canvas id="canvas" width="400" height="300"></canvas>
+        <div id="clearButton">Clear Canvas</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const redSlider = document.getElementById('red');
+            const greenSlider = document.getElementById('green');
+            const blueSlider = document.getElementById('blue');
+            const redValue = document.getElementById('redValue');
+            const greenValue = document.getElementById('greenValue');
+            const blueValue = document.getElementById('blueValue');
+            const colorDisplay = document.getElementById('colorDisplay');
+            const hexValue = document.getElementById('hexValue');
+            const binaryValue = document.getElementById('binaryValue');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const clearButton = document.getElementById('clearButton');
+            let isDrawing = false;
+
+            function updateColor() {
+                const red = redSlider.value;
+                const green = greenSlider.value;
+                const blue = blueSlider.value;
+
+                redValue.textContent = red;
+                greenValue.textContent = green;
+                blueValue.textContent = blue;
+
+                const hex = rgbToHex(red, green, blue);
+                const binary = rgbToBinary(red, green, blue);
+
+                colorDisplay.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+                hexValue.textContent = hex;
+                binaryValue.textContent = binary;
+                console.log(binary)
+                ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
+            }
+
+            function rgbToHex(r, g, b) {
+                const toHex = (value) => value.toString(16).padStart(2, '0');
+                return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+            }
+
+            function rgbToBinary(r, g, b) {
+                const toBinary = (value) => value.toString(2).padStart(8, '0');
+                return `${toBinary(r)} ${toBinary(g)} ${toBinary(b)}`;
+            }
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                ctx.lineCap = 'round';
+                ctx.lineWidth = 5;
+                ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            }
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            redSlider.addEventListener('input', updateColor);
+            greenSlider.addEventListener('input', updateColor);
+            blueSlider.addEventListener('input', updateColor);
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            clearButton.addEventListener('click', clearCanvas);
+
+            // Initialize the color picker
+            updateColor();
+        });
+    </script>
+</body>
+</html>
+
