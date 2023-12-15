@@ -15,7 +15,9 @@ hide: true
             font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
             text-align: center;
             margin: 50px;
-            background-color: #4b0775;
+            background-image: url('./images/space.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         /* Message popup styles */
         #message-popup {
