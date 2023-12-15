@@ -86,6 +86,7 @@
     <div id="canvas-container">
         <canvas id="canvas" width="400" height="400" style="cursor: crosshair; border: 1px solid #000;"></canvas>
         <button onclick="clearCanvas()">Clear Canvas</button>
+        <button onclick="startQuiz()">Start Hex Quiz</button> <!-- New button for the quiz -->
         <div class="info-dropdown" id="infoDropdown">
             <!-- Paragraph explaining how to convert from RGB to hex -->
             <p><strong>RGB to Hex Conversion</strong></p>
@@ -263,6 +264,40 @@
             var dropdown = document.getElementById('infoDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
+
+        var quizRGB;
+
+function startQuiz() {
+    // Generate a random RGB value for the quiz
+    quizRGB = generateRandomRGB();
+    var hexString = rgbToHex(quizRGB);
+
+    // Prompt the user with the quiz
+    var userHex = prompt("Enter the hexadecimal color for RGB(" + quizRGB.join(', ') + "):");
+
+    // Check the user's answer
+    checkQuizAnswer(userHex, hexString);
+}
+
+function generateRandomRGB() {
+    var randomRGB = [
+        Math.floor(Math.random() * 256),
+        Math.floor(Math.random() * 256),
+        Math.floor(Math.random() * 256)
+    ];
+    return randomRGB;
+}
+
+function checkQuizAnswer(userHex, correctHex) {
+    // Convert user input to uppercase for case-insensitive comparison
+    userHex = userHex ? userHex.toUpperCase() : '';
+
+    if (userHex === correctHex) {
+        alert("Correct! Well done.");
+    } else {
+        alert("Incorrect. The correct answer is #" + correctHex);
+    }
+}
     </script>
 </body>
 </html>
