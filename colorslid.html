@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RGB to Hex Converter</title>
+        <!-- Styling for the page -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,8 +61,10 @@
     </style>
 </head>
 <body>
+     <!-- Heading of the page -->
     <h1>RGB to Hex Converter</h1>
-
+  
+    <!-- Form for user input of RGB values -->
     <form id="rgbForm">
         <label for="red">Red:</label>
         <input type="number" id="red" min="0" max="255" value="0">
@@ -74,21 +77,23 @@
 
         <button type="button" onclick="convertAndDisplayColor()">Convert</button>
     </form>
-
+  <!-- Display divs for color and hexadecimal representation -->
     <div id="color-display"></div>
     <div id="hex-display"></div>
 
+    <!-- Canvas for drawing clear canvas button. Also instruction for RGB to hex conversion pop up -->
     <div id="canvas-container">
         <canvas id="canvas" width="400" height="400" style="cursor: crosshair; border: 1px solid #000;"></canvas>
         <button onclick="clearCanvas()">Clear Canvas</button>
         <div class="info-dropdown" id="infoDropdown">
+              <!-- Paragraph explaining how to convert from RGB to hex -->
             <p><strong>RGB to Hex Conversion</strong></p>
             <p>RGB values represent colors using Red, Green, and Blue components.</p>
             <p>The conversion to hexadecimal involves converting each component to base-16 (hex).</p>
             <p>Example: RGB(173, 216, 230)</p>
-            <p><em>Red (173):</em> \(173 \div 16 = 10 \, (A), \, \text{remainder} = 13 \, (D) \, \Rightarrow \, \text{Hex} = AD\)</p>
-            <p><em>Green (216):</em> \(216 \div 16 = 13 \, (D), \, \text{remainder} = 8 \, \Rightarrow \, \text{Hex} = D8\)</p>
-            <p><em>Blue (230):</em> \(230 \div 16 = 14 \, (E), \, \text{remainder} = 6 \, \Rightarrow \, \text{Hex} = E6\)</p>
+            <p><em>Red (173):((173 \16)= 10 remainder 13. 10 correspondes with A and 13 correspondes with 13 so hex representation of 173 is AD)</p>
+            <p><em>Green (216):((216 \16)= 13 remainder 8. 10 correspondes with D and 8 correspondes with 8 so hex representation of 216 D8\)</p>
+            <p><em>Blue (230):((230 \16)= 14 remainder 6. 14 correspondes with E and 6 correspondes with 6 so hex representation of 230 is E6)</p>
             <p><strong>Combine Hex Components:</strong> AD (Red) + D8 (Green) + E6 (Blue) = <span id="combinedHex">ADD8E6</span></p>
             <p>Therefore, RGB(173, 216, 230) in Hexadecimal is #ADD8E6.</p>
             <p>The base-16 system uses letters A-F to represent values 10-15.</p>
@@ -96,6 +101,7 @@
         <p class="info-dropdown-btn" onclick="toggleInfoDropdown()">How does RGB to Hex work?</p>
     </div>
 
+    <!-- Table displaying RGB values in various formats -->
     <h2>RGB Values Chart</h2>
     <table>
         <tr>
@@ -105,6 +111,7 @@
             <th>Octal</th>
             <th>Hexadecimal</th>
         </tr>
+         <!-- Rows for Red, Green, and Blue values -->
         <tr id="red-row">
             <td>Red</td>
             <td id="red-decimal">0</td>
@@ -127,16 +134,47 @@
             <td id="blue-hex">0</td>
         </tr>
     </table>
-
+  <!-- JavaScript section with functions for RGB to Hex conversion, chart update, drawing, and info dropdown -->
     <script>
         function rgbToHex(rgb) {
-            var hexCode = '';
-            for (var decimal of rgb) {
-                var hexComponent = decimal.toString(16).toUpperCase().padStart(2, '0');
-                hexCode += hexComponent;
-            }
-            return hexCode;
-        }
+    // Initialize an empty string to store the hexadecimal color code
+    var hexCode = '';
+
+    // Iterate through each decimal component in the RGB array
+    for (var decimal of rgb) {
+        // Convert the decimal to a hexadecimal string
+        function rgbToHex(rgb) {
+    // Initialize an empty string to store the hexadecimal color code
+    var hexCode = '';
+
+    // Iterate through each decimal component in the RGB array
+    for (var decimal of rgb) {
+        // Convert the decimal to a hexadecimal string
+        var hexComponent = decimal.toString(16).toUpperCase();
+        
+        // Ensure that the hexadecimal string is always two characters long
+        hexComponent = hexComponent.padStart(2, '0');
+
+        // Concatenate the hexadecimal component to the overall color code
+        hexCode += hexComponent;
+    }
+
+    // Return the final hexadecimal color code
+    return hexCode;
+}
+
+        
+        // Ensure that the hexadecimal string is always two characters long
+        hexComponent = hexComponent.padStart(2, '0');
+
+        // Concatenate the hexadecimal component to the overall color code
+        hexCode += hexComponent;
+    }
+
+    // Return the final hexadecimal color code
+    return hexCode;
+}
+
 
         function hexToRgb(hex) {
             var r = parseInt(hex.substring(0, 2), 16);
@@ -145,7 +183,7 @@
 
             return [r, g, b];
         }
-
+// function to update chart with the RGB values
         function updateChart(red, green, blue) {
             document.getElementById('red-decimal').innerText = red;
             document.getElementById('red-binary').innerText = red.toString(2);
@@ -167,7 +205,7 @@
             var red = parseInt(document.getElementById('red').value);
             var green = parseInt(document.getElementById('green').value);
             var blue = parseInt(document.getElementById('blue').value);
-
+ // retreives RGB values from input fields and validateshtem error message if they are not in range 
             if (isNaN(red) || isNaN(green) || isNaN(blue) ||
                 red < 0 || red > 255 ||
                 green < 0 || green > 255 ||
@@ -176,7 +214,7 @@
                 return;
             }
 
-            // Display the color
+            // Display the color using the precious functions
             var colorDisplay = document.getElementById('color-display');
             var hexColor = rgbToHex([red, green, blue]);
             colorDisplay.style.backgroundColor = '#' + hexColor;
@@ -209,13 +247,16 @@
             function draw(e) {
                 if (!isDrawing) return;
 
+ // Extract the X and Y coordinates of the mouse pointer relative to the canvas
                 var x = e.clientX - canvas.offsetLeft;
                 var y = e.clientY - canvas.offsetTop;
-
+// Convert the selected color (in Hex) to RGB
                 var rgbColor = hexToRgb(color);
                 ctx.fillStyle = `rgb(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]})`;
                 ctx.beginPath();
-                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                 // Draw a filled circle (arc) on the canvas at the specified coordinates (X, Y)
+    // The circle has a radius of 3 pixels and spans a full circle (2π radians)
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
                 ctx.fill();
             }
 
