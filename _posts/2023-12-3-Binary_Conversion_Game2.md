@@ -12,10 +12,10 @@ hide: true
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
             text-align: center;
             margin: 50px;
-            background-color: #f7f7f7;
+            background-color: #4b0775;
         }
         /* Message popup styles */
         #message-popup {
