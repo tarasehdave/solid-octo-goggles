@@ -39,14 +39,14 @@ hide: true
         button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #3498db;
+            background-color: #db7a34;
             color: #fff;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #2980b9;
+            background-color: #e88e4d;
         }
         #result {
             margin-top: 20px;
@@ -60,34 +60,6 @@ hide: true
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-        }
-        .distanceBar {
-            width: 100%;
-            height: 20px;
-            position: relative;
-            margin-top: 20px;
-            background-color: #ecf0f1;
-        }
-        .distanceFill {
-            height: 100%;
-            position: absolute;
-        }
-        .distanceText {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: #333;
-        }
-        #actualDistanceBar {
-            margin-bottom: 10px;
-        }
-        #actualDistanceFill {
-            background-color: #2ecc71;
-        }
-        #guessedDistanceFill {
-            background-color: #e74c3c;
         }
     </style>
 </head>
