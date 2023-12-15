@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -136,7 +136,7 @@ Liquid for loop includes last number, thus the Minus
             {% endcomment %}
             {% for i in (0..bits) %}
             <th><img id="bulb{{ i }}" src="{{site.baseurl}}/images/off.png" alt="" width="40" height="Auto">
-                <div class="button" id="butt{{ i }}" onclick="javascript:toggleBit({{ i }})">Turn on</div>
+                <div class="button" id="butt{{ i }}" onclick="javascript:toggleBit({ i })">Turn on</div>
             </th>
             {% endfor %}
         </tr>
@@ -154,7 +154,7 @@ Liquid for loop includes last number, thus the Minus
 </table>
 
 <script>
-    const BITS = {{ BITS }};
+    const BITS = { BITS };
     const MAX = 2 ** BITS - 1;
     const MSG_ON = "Turn on";
     const IMAGE_ON = "{{site.baseurl}}/images/on.png";
