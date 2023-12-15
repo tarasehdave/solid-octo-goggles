@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binary Shift Simulator</title>
     <style>
-        body {
-      display: flex;
-      justify-content: center;
+        body { 
+      display: flex; 
+      justify-content: center; 
       align-items: center;
       height: 100vh;
       margin: 0;
@@ -89,7 +89,7 @@
             }
         }
         function generateRandomBinary() {
-            let randomBinary = '';
+            let randomBinary = ''; 
             for(let i = 0; i < 16; i++) {
                 randomBinary += Math.round(Math.random()).toString();
             }
@@ -105,7 +105,7 @@
         function provideFeedback(message, isError = false) {
             let feedbackElement = document.getElementById('feedback');
             feedbackElement.className = isError ? 'error' : 'success';
-            feedbackElement.innerText = message;
+            feedbackElement.innerText = message; 
         }
     </script>
 </body>
