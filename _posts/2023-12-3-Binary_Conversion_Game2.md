@@ -4,7 +4,6 @@ layout: post
 title: Binary Conversion Game V2
 courses: { compsci: {week: 2 } } 
 type: hacks
-hide: true
 ---
 <html lang="en">
 <head>
