@@ -1,7 +1,7 @@
 ---
 toc: false
 layout: post
-title: Binary Conversion Game V2
+title: Binary Conversion Game Demo
 courses: { compsci: {week: 2 } } 
 type: hacks
 hide: true
