@@ -1,10 +1,4 @@
----
-toc: false
-layout: post
-title: Binary Conversion Game V2
-courses: { compsci: {week: 2 } } 
-type: hacks
----
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +8,7 @@ type: hacks
             font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
             text-align: center;
             margin: 50px;
-            background-image: url('./images/space.jpeg');
+            background-image: url('./images/33025526aa7049c694846a3b873d7c36.webp');
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -24,7 +18,7 @@ type: hacks
             bottom : 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #ff0000;
+            background-color: hsl(0, 16%, 89%);
             color: #fff;
             padding: 15px;
             border-radius: 10px;
@@ -32,22 +26,22 @@ type: hacks
             display: none;
             }
         h1 {
-            color: #333;
+            color: #e0d8d8;;
         }
         p {
-            color: #555;
+            color: #e0d8d8;;
         }
         button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #db7a34;
-            color: #fff;
+            background-color: #e0d8d8;
+            color: #e0d8d8;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #e88e4d;
+            background-color: #dedddc;
         }
         #result {
             margin-top: 20px;
@@ -142,7 +136,7 @@ Liquid for loop includes last number, thus the Minus
             {% endcomment %}
             {% for i in (0..bits) %}
             <th><img id="bulb{{ i }}" src="{{site.baseurl}}/images/off.png" alt="" width="40" height="Auto">
-                <div class="button" id="butt{{ i }}" onclick="javascript:toggleBit({{ i }})">Turn on</div>
+                <div class="button" id="butt{{ i }}" onclick="javascript:toggleBit({ i })">Turn on</div>
             </th>
             {% endfor %}
         </tr>
@@ -160,7 +154,7 @@ Liquid for loop includes last number, thus the Minus
 </table>
 
 <script>
-    const BITS = {{ BITS }};
+    const BITS = { BITS };
     const MAX = 2 ** BITS - 1;
     const MSG_ON = "Turn on";
     const IMAGE_ON = "{{site.baseurl}}/images/on.png";
@@ -286,3 +280,4 @@ Liquid for loop includes last number, thus the Minus
         document.getElementById('instructions-modal').style.display = 'none';
     }
 </script>
+

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binary Shift Simulator</title>
     <style>
-        body {
-      display: flex;
-      justify-content: center;
+        body { 
+      display: flex; 
+      justify-content: center; 
       align-items: center;
       height: 100vh;
       margin: 0;
@@ -43,15 +43,15 @@
             font-size: 18px;
             color: #333;
         }
-        .error {
+        .error { 
             color: red;
-        }
+        } 
         .success {
-            color: green;
+            color: green; 
         }
-    </style>
-</head>
-<body>
+    </style>  
+</head>   
+<body>   
     <div id="app">
         <h1>Binary Shift Simulator</h1>
         <p id="instructions">Enter a binary number or generate a random one, then apply shift operations to see the results.</p>
@@ -77,7 +77,7 @@
                 updateOutput(shifted, "Shifting left by 1 bit is equivalent to multiplying by 2.");
             } else {
                 provideFeedback("Invalid binary input. Please enter a binary number.", true);
-            }
+            } 
         }
         function shiftRight() {
             let binary = document.getElementById('binaryInput').value;
@@ -86,10 +86,10 @@
                 updateOutput(shifted, "Shifting right by 1 bit is equivalent to dividing by 2 (ignoring remainder).");
             } else {
                 provideFeedback("Invalid binary input. Please enter a binary number.", true);
-            }
-        }
+            }  
+        }  
         function generateRandomBinary() {
-            let randomBinary = '';
+            let randomBinary = ''; 
             for(let i = 0; i < 16; i++) {
                 randomBinary += Math.round(Math.random()).toString();
             }
@@ -105,8 +105,8 @@
         function provideFeedback(message, isError = false) {
             let feedbackElement = document.getElementById('feedback');
             feedbackElement.className = isError ? 'error' : 'success';
-            feedbackElement.innerText = message;
+            feedbackElement.innerText = message; 
         }
-    </script>
+    </script> 
 </body>
 </html>
